@@ -52,6 +52,12 @@ def print(students)
   end
 end
 
+def which_cohort(students)
+  puts "Which cohort would you like to see?"
+  user_input = gets.chomp.capitalize.intern
+  puts students.map { |student| if student[:cohort] == user_input; student[:name] end }.compact
+end
+
 students = input_students
 print_header
 print(students)
