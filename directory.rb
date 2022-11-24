@@ -1,18 +1,27 @@
-#print the list of students
-puts "The students of Villains Academy"
-puts "-------------"
-puts "Dr. Hannibal Lecter"
-puts "Darth Vader"
-puts "Nurse Ratched"
-puts "Michael Corleone"
-puts "Alex DeLarge"
-puts "The Wicked Witch of the West"
-puts "Terminator"
-puts "Freddy Krueger"
-puts "The Joker"
-puts "Joffrey Baratheon"
-puts "Norman Bates"
-#print the total number of students
-print "Overall, we have "
-print 11
-puts " great students"
+def print_header
+  puts "The students of Villains Acadmey"
+  puts "-------------"
+end
+
+def print(students)
+  students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
+def print_footer(names)
+  puts "Overall, we have #{names.count} great students"
+end
+
+def input_students
+puts "Please enter the name of the students"
+puts "To finish, just hit return twice"
+students = []
+name = gets.chomp
+while !name.empty? do 
+  students << {name: name, cohort: :november} 
+  puts "Now we have #{students.count} students"
+  name = gets.chomp
+end
+students
+end
