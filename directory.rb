@@ -13,13 +13,22 @@ def print_footer
   end
 end
 
+
 def input_less
   var = gets.chomp
   if var.empty?
-    var = "None"
+    var = "None"    
   end
   var
 end
+
+def student_count_update
+  if @students.count == 1
+    puts "Now we have 1 student"
+  else
+    puts "Now we have #{@students.count} students"
+  end
+  end
 
 def input_students
   puts "To finish at anytime, type exit"
@@ -34,11 +43,7 @@ def input_students
     cob = input_less
     break if cob == "exit"
     @students << { name: name.capitalize, cohort: cohort.capitalize.intern, cob: cob.capitalize.intern }
-    if @students.count == 1
-      puts "Now we have 1 student"
-    else
-      puts "Now we have #{@students.count} students"
-    end
+    student_count_update
   end
 end
 
@@ -52,6 +57,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -69,6 +75,8 @@ def process(selection)
    show_students
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
@@ -84,6 +92,16 @@ def save_students
     file.puts csv_line
   end
   file.close
+end
+
+
+def load_students
+file = File.open("students.csv", "r")
+file.readlines.each do |line|
+  name, cohort, cob = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.intern, cob: cob.intern}
+end
+file.close
 end
 
 def interactive_menu
