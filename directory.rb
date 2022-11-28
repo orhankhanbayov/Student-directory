@@ -132,6 +132,10 @@ end
 
 def load_students(filename = "students.csv")
   @students.clear
+  if !File.exist?(filename)
+    file = File.new("students.csv", "w")
+    file.close
+  end
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, cob = line.chomp.split(",")
