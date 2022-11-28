@@ -158,7 +158,7 @@ def interactive_menu
     print_menu
     process(STDIN.gets.chomp)
   end
-  systen("clear")
+  system("clear")
 end
 
 def directoryprogram
