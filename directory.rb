@@ -57,9 +57,7 @@ def input_students
 end
 
 def print_students_list
-  @students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end
+  @students.each_with_index { |student, index| puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" }
 end
 
 def print_menu
@@ -123,10 +121,13 @@ end
 
 def save_students
   system("clear")
-  puts "What would you like to save the file as?"
+  puts "What would you like to save the file as? Hit enter for default students.csv"
   fname = STDIN.gets.chomp + ".csv"
+  if fname == ".csv"
+    fname = "students.csv"
+  end
   file = File.open(fname, "w")
-  @students.each {|student| file.puts [student[:name], student[:cohort], student[:cob]].join(",")}
+  @students.each { |student| file.puts [student[:name], student[:cohort], student[:cob]].join(",") }
   file.close
 end
 
