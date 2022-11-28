@@ -1,5 +1,5 @@
 @students = []
-
+require 'csv'
 def print_header
   puts "The students of Villains Acadmey"
   puts "-------------"
@@ -120,30 +120,25 @@ def load_students_inmenu
 end
 
 def save_students
-  system("clear")
-  puts "What would you like to save the file as? Hit enter for default students.csv"
+  puts "What would you like to save the file as? Leave blank for default students.csv"
   fname = STDIN.gets.chomp + ".csv"
   if fname == ".csv"
     fname = "students.csv"
   end
-  file = File.open(fname, "w")
-  @students.each { |student| file.puts [student[:name], student[:cohort], student[:cob]].join(",") }
-  file.close
-end
+  CSV.open(fname, "w") { |csv| @students.each {|x| csv << x.values } }
+  end
 
-def load_students(filename = "students.csv")
-  @students.clear
-  if !File.exist?(filename)
-    file = File.new("students.csv", "w")
-    file.close
+  def load_students(filename = "students.csv")
+    @students.clear
+    if !File.exist?(filename)
+      file = File.new("students.csv", "w")
+    end
+    CSV.foreach(filename) do |row|
+  name, cohort, cob = row[0], row[1], row[2]
+  insert_to_hash(name, cohort, cob)
   end
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, cob = line.chomp.split(",")
-    insert_to_hash(name, cohort, cob)
   end
-  file.close
-end
+  
 
 def cline_load_students
   filename = ARGV.first
